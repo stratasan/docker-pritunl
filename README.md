@@ -1,4 +1,7 @@
-# Pritunl as a Docker container
+Pritunl
+=======
+
+Pritunl as a Docker container
 
 ## Config (env)
 
