@@ -1,4 +1,4 @@
-var hostName = 'vpn.stratasan.com';
+var hostName = 'SOMEHOST';
 //remove lingering Offline hosts
 db.hosts.remove({'status': 'offline'});
 //update hosts that arent the hostName to have the hostname
