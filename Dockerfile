@@ -19,12 +19,14 @@ RUN apt-get update -q && \
     python2 \
     net-tools \
     pritunl \
+    mongodb-clients \
     psmisc && \
   rm -rf /var/lib/apt/lists/*
 
 COPY plugins /var/lib/pritunl/plugins
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+COPY mongo-attach-all.js /
 
 EXPOSE 80
 EXPOSE 443

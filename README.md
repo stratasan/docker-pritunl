@@ -41,33 +41,3 @@ Administrator default password:
 ```
 
 Based on [jippi/pritunl](https://github.com/jippi/docker-pritunl)
-
-## 5 min cron
-
-var hostName = 'vpn.stratasan.com';
-//remove lingering Offline hosts
-db.hosts.remove({'status': 'offline'});
-//update hosts that arent the hostName to have the hostname
-db.hosts.updateMany({'public_address': {$ne: hostName}}, {$set: {'public_address': hostName}});
-// Update server(s) to attach all online hosts
-var hostIds = db.hosts.find({'status': 'online'}, {_id:1}).map(function(item){ return item._id; });
-db.servers.update({}, {$set: {'hosts': hostIds}});
-db.servers.updateMany({'status': 'offline'}, {$set: {'status': 'online'}});
-
-
-
-1:07
-namely db.hosts.updateMany({'public_address': {$ne: hostName}}, {$set: {'public_address': hostName}});
-
-
-FROM mongo:4.0.16
-COPY mongo-attach-all.js /
-  8   command:
-  9     - "mongo"
- 10     - "--host"
- 11     - "$(PRITUNL_MONGODB_URI)"
- 12     - "/mongo-attach-all.js"
-
-
-
- run in the vpn vpc using the mongo sg to have access to mongo
