@@ -27,11 +27,11 @@ cat << EOF >/etc/pritunl.conf
 }
 EOF
 
-#detach the process, sleep for 5 min, then do the thing
+#detach the process, sleep for 1 min, then do the thing
 # --quiet so passwords don't land in logs
+nohup bash -c "sleep 60 && mongo  --host $PRITUNL_MONGODB_URI --quiet /mongo-attach-all.js" >>/var/log/pritunl_journal.log 2>&1 &
+# do it again at 5 min in case you missed some at 5
 nohup bash -c "sleep 300 && mongo  --host $PRITUNL_MONGODB_URI --quiet /mongo-attach-all.js" >>/var/log/pritunl_journal.log 2>&1 &
-# do it again at 10 min in case you missed some at 5
-nohup bash -c "sleep 600 && mongo  --host $PRITUNL_MONGODB_URI --quiet /mongo-attach-all.js" >>/var/log/pritunl_journal.log 2>&1 &
 
 
 exec /usr/bin/pritunl start -c /etc/pritunl.conf
